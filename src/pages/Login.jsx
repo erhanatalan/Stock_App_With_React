@@ -7,17 +7,30 @@ import LockIcon from "@mui/icons-material/Lock";
 import image from "../assets/result.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
-import { useSelector } from "react-redux";
+import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from "@mui/material/TextField";
-import { object, string, number, date, InferType } from "yup";
+import { object, string } from "yup";
+import { useSelector } from "react-redux";
+import useAuthCall from "../hooks/useAuthCall";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { currentUser, error } = useSelector((state) => state?.auth);
-
+  const { currentUser, error, loading } = useSelector((state) => state?.auth);
+  const {login}= useAuthCall()
   const loginSchema = object({
-    email: string().email("Lutfen dogru bir email giriniz.").required("Bu alan zorunludur."),
-    password: string().required("Password zorunludur").min(8,"Minumum 8 karakter olmalidir.").max(16, "maximum 16 karakter olmalidir.").matches(/\d+/, "Password en az bir sayi icermelidir.").matches(/[a-z]/, "Password en az bir kucuk harf icermelidir.").matches(/[A-Z]/, "Password en az bir buyuk harf icermelidir."),
+    email: string()
+      .email("Lutfen dogru bir email giriniz.")
+      .required("Bu alan zorunludur."),
+    password: string()
+      .required("Password zorunludur")
+      .min(8, "Minumum 8 karakter olmalidir.")
+      .max(16, "maximum 16 karakter olmalidir.")
+      .matches(/\d+/, "Password en az bir sayi icermelidir.")
+      .matches(/[a-z]/, "Password en az bir kucuk harf icermelidir.")
+      .matches(/[A-Z]/, "Password en az bir buyuk harf icermelidir.")
+      .matches(
+        /[!,?{}<>%&$#@^_*+-]/,
+        "Password en az bir özel karakter içermelidir."
+      ),
   });
 
   return (
@@ -60,8 +73,7 @@ const Login = () => {
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
             onSubmit={(values, actions) => {
-              //todo post
-              navigate("/stock");
+              login(values)
               actions.resetForm();
               actions.setSubmitting(false);
             }}
@@ -103,11 +115,10 @@ const Login = () => {
                     onBlur={handleBlur}
                     value={values.password}
                   />
+                  <LoadingButton variant="contained" type="submit" loading={loading} disabled={isSubmitting}>
+                    Submit
+                  </LoadingButton>
                 </Box>
-                {errors.password && touched.password && errors.password}
-                <button type="submit" disabled={isSubmitting}>
-                  Submit
-                </button>
               </Form>
             )}
           </Formik>
