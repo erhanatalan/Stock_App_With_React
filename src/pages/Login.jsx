@@ -5,13 +5,14 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import image from "../assets/result.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { Formik, Form } from "formik";
 import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from "@mui/material/TextField";
 import { object, string } from "yup";
 import { useSelector } from "react-redux";
 import useAuthCall from "../hooks/useAuthCall";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
   const { currentUser, error, loading } = useSelector((state) => state?.auth);
@@ -77,50 +78,8 @@ const Login = () => {
               actions.resetForm();
               actions.setSubmitting(false);
             }}
+            component={(props)=> <LoginForm {...props}/>}
           >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              /* and other goodies */
-            }) => (
-              <Form onSubmit={handleSubmit}>
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                >
-                  <TextField
-                    label="Email"
-                    type="email"
-                    id="email"
-                    name="email"
-                    variant="outlined"
-                    error={touched?.email && Boolean(errors?.email)}
-                    helperText={touched?.email && errors?.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values?.email || ""}
-                  />
-                  <TextField
-                    label="Password"
-                    type="password"
-                    name="password"
-                    variant="outlined"
-                    error={touched?.password && Boolean(errors?.password)}
-                    helperText={touched?.password && errors?.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.password}
-                  />
-                  <LoadingButton variant="contained" type="submit" loading={loading} disabled={isSubmitting}>
-                    Submit
-                  </LoadingButton>
-                </Box>
-              </Form>
-            )}
           </Formik>
           <Box sx={{ textAlign: "center", mt: 2 }}>
             <Link to="/register">Do you have not an account?</Link>
