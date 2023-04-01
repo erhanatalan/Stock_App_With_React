@@ -1,10 +1,10 @@
-import Box from "@mui/material/Box"
-import TextField from "@mui/material/TextField"
-import LoadingButton from "@mui/lab/LoadingButton"
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import LoadingButton from "@mui/lab/LoadingButton";
 
-import { Form } from "formik"
-import { useSelector } from "react-redux"
-import { object, string } from "yup"
+import { Form } from "formik";
+import { useSelector } from "react-redux";
+import { object, string } from "yup";
 
 export const loginScheme = object({
   email: string()
@@ -18,10 +18,10 @@ export const loginScheme = object({
     .matches(/[a-z]/, "Password bir küçük harf içermelidir")
     .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
     .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
-})
+});
 
 const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
-  const { loading } = useSelector((state) => state.auth)
+  const { loading } = useSelector((state) => state.auth);
   return (
     <Form>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -38,7 +38,7 @@ const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
           error={touched.email && Boolean(errors.email)}
         />
         <TextField
-          label="password"
+          label="Password"
           name="password"
           id="password"
           type="password"
@@ -59,7 +59,7 @@ const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
         </LoadingButton>
       </Box>
     </Form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

@@ -1,38 +1,17 @@
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import LockIcon from "@mui/icons-material/Lock";
-import image from "../assets/result.svg";
-import { Link} from "react-router-dom";
-import { Formik, Form } from "formik";
-import LoadingButton from '@mui/lab/LoadingButton';
-import TextField from "@mui/material/TextField";
-import { object, string } from "yup";
-import { useSelector } from "react-redux";
-import useAuthCall from "../hooks/useAuthCall";
-import LoginForm from "../components/LoginForm";
+import Avatar from "@mui/material/Avatar"
+import Box from "@mui/material/Box"
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import LockIcon from "@mui/icons-material/Lock"
+import image from "../assets/result.svg"
+import { Link } from "react-router-dom"
+import { Formik } from "formik"
+import useAuthCall from "../hooks/useAuthCall"
+import LoginForm, { loginScheme } from "../components/LoginForm"
 
 const Login = () => {
-  const { currentUser, error, loading } = useSelector((state) => state?.auth);
-  const {login}= useAuthCall()
-  const loginSchema = object({
-    email: string()
-      .email("Lutfen dogru bir email giriniz.")
-      .required("Bu alan zorunludur."),
-    password: string()
-      .required("Password zorunludur")
-      .min(8, "Minumum 8 karakter olmalidir.")
-      .max(16, "maximum 16 karakter olmalidir.")
-      .matches(/\d+/, "Password en az bir sayi icermelidir.")
-      .matches(/[a-z]/, "Password en az bir kucuk harf icermelidir.")
-      .matches(/[A-Z]/, "Password en az bir buyuk harf icermelidir.")
-      .matches(
-        /[!,?{}<>%&$#@^_*+-]/,
-        "Password en az bir özel karakter içermelidir."
-      ),
-  });
+  const { login } = useAuthCall()
 
   return (
     <Container maxWidth="lg">
@@ -70,17 +49,18 @@ const Login = () => {
           >
             Login
           </Typography>
+
           <Formik
             initialValues={{ email: "", password: "" }}
-            validationSchema={loginSchema}
+            validationSchema={loginScheme}
             onSubmit={(values, actions) => {
               login(values)
-              actions.resetForm();
-              actions.setSubmitting(false);
+              actions.resetForm()
+              actions.setSubmitting(false)
             }}
-            component={(props)=> <LoginForm {...props}/>}
-          >
-          </Formik>
+            component={(props) => <LoginForm {...props} />}
+          ></Formik>
+
           <Box sx={{ textAlign: "center", mt: 2 }}>
             <Link to="/register">Do you have not an account?</Link>
           </Box>
@@ -93,7 +73,7 @@ const Login = () => {
         </Grid>
       </Grid>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
