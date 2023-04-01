@@ -7,7 +7,14 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import List from '@mui/material/List';
 
+const icons = [
+    {
+        
+    }
+]
+
 const MenuListItems = ({open}) => {
+
   return (
     <div>
         <List>
