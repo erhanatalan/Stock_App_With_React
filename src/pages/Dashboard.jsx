@@ -17,11 +17,13 @@ import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 import useAuthCall from '../hooks/useAuthCall';
 import MenuListItems from '../components/MenuListItems';
+import { Outlet } from 'react-router-dom';
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
+  backgroundColor: theme.palette.secondary.main,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -30,6 +32,7 @@ const openedMixin = (theme) => ({
 });
 
 const closedMixin = (theme) => ({
+  backgroundColor: theme.palette.secondary.main,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -122,23 +125,18 @@ function Dashboard() {
           {currentUser && <Button color="inherit" onClick={()=> logout()}>Logout</Button>}
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} sx={{color:"white"}}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <MenuListItems open={open}/>
+        <MenuListItems open={open}/> 
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-        </Typography>
+        <Outlet/>
       </Box>
   </Box>
   )
