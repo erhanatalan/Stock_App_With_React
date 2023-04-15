@@ -36,9 +36,21 @@ const useStockCall = () => {
         toastErrorNotify("Firm Delete Failed")
       }
     }
+    const postFirmCreate = async (url, info) => {
+      dispatch(fetchStart())
+      try {
+        await axiosWithToken.post(`stock/${url}/`, info)
+        getStockData(url)
+        toastSuccessNotify("Firm Add Success")
+      } catch (error) {
+        console.log(error)
+        dispatch(fetchFail())
+        toastErrorNotify("Firm Add Failed")
+      }
+    }
   
     return {
-      getStockData,deleteStockData,
+      getStockData,deleteStockData,postFirmCreate,
     }
   }
   

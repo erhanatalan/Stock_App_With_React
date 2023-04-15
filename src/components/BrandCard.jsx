@@ -17,7 +17,7 @@ function BrandCard({ brand, setOpen, setInfo }) {
     <Card
       sx={{
         p: 2,
-        width: "300px",
+        width: "200px",
         height: "300px",
         display: "flex",
         flexDirection: "column",
@@ -30,7 +30,7 @@ function BrandCard({ brand, setOpen, setInfo }) {
         </Typography>
       </CardContent>
       <CardMedia
-        sx={{ p: 1, objectFit: "contain", height: "220px" }}
+        sx={{ p: 1, objectFit: "contain", height: "150px" }}
         image={brand?.image}
         title="firm-image"
         component="img"
