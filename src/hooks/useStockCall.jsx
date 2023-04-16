@@ -17,7 +17,7 @@ const useStockCall = () => {
       try {
         const { data } = await axiosWithToken(`stock/${url}/`)
         dispatch(getSuccess({ data, url }))
-        toastSuccessNotify("Success")
+        // toastSuccessNotify("Success")
       } catch (error) {
         console.log(error)
         dispatch(fetchFail())
@@ -29,28 +29,40 @@ const useStockCall = () => {
       try {
         await axiosWithToken.delete(`stock/${url}/${id}/`)
         getStockData(url)
-        toastSuccessNotify("Firm Delete Success")
+        toastSuccessNotify("Delete Success")
       } catch (error) {
         console.log(error)
         dispatch(fetchFail())
-        toastErrorNotify("Firm Delete Failed")
+        toastErrorNotify("Delete Failed")
       }
     }
-    const postFirmCreate = async (url, info) => {
+    const postStockData = async (url, info) => {
       dispatch(fetchStart())
       try {
         await axiosWithToken.post(`stock/${url}/`, info)
         getStockData(url)
-        toastSuccessNotify("Firm Add Success")
+        toastSuccessNotify("Add Success")
       } catch (error) {
         console.log(error)
         dispatch(fetchFail())
-        toastErrorNotify("Firm Add Failed")
+        toastErrorNotify("Add Failed")
+      }
+    }
+    const putStockData = async (url, info) => {
+      dispatch(fetchStart())
+      try {
+        await axiosWithToken.put(`stock/${url}/${info.id}/`, info)
+        getStockData(url)
+        toastSuccessNotify("Changed Success")
+      } catch (error) {
+        console.log(error)
+        dispatch(fetchFail())
+        toastErrorNotify("Changed Failed")
       }
     }
   
     return {
-      getStockData,deleteStockData,postFirmCreate,
+      getStockData,deleteStockData,postStockData,putStockData,
     }
   }
   

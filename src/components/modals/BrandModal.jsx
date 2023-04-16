@@ -8,7 +8,7 @@ import { modalStyle } from '../../styles/globalStyle';
 import useStockCall from '../../hooks/useStockCall';
 
 
-const FirmModal = ({info, setInfo,setOpen,open}) => {
+const BrandModal = ({info, setInfo,setOpen,open}) => {
     const { postStockData, putStockData } = useStockCall()
     
 
@@ -19,9 +19,9 @@ const FirmModal = ({info, setInfo,setOpen,open}) => {
     }
     const handleSubmit =(e)=>{
         e.preventDefault()
-        info?.name ? putStockData(`firms`, info) : postStockData(`firms`, info)
+        info?.name ? putStockData("brands", info) : postStockData("brands", info)
         setOpen(false)
-        setInfo({ name: "", phone: "", address: "", image: "" })
+        setInfo({ name: "", image: "" })
     }
 
   return (
@@ -49,27 +49,6 @@ const FirmModal = ({info, setInfo,setOpen,open}) => {
               onChange={handleChange}
             />
             <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
-              variant="outlined"
-              required
-              value={info?.phone}
-              onChange={handleChange}
-            />
-            <TextField
-              label="Address"
-              name="address"
-              id="address"
-              type="text"
-              variant="outlined"
-              required
-              value={info?.address}
-              onChange={handleChange}
-            />
-
-            <TextField
               label="Image"
               name="image"
               id="image"
@@ -80,8 +59,8 @@ const FirmModal = ({info, setInfo,setOpen,open}) => {
               onChange={handleChange}
             />
 
-            <Button type="submit" variant="contained">
-              Submit Firm
+            <Button type="submit" variant="contained" >
+              Submit Brand
             </Button>
           </Box>
         </Box>
@@ -90,4 +69,4 @@ const FirmModal = ({info, setInfo,setOpen,open}) => {
   );
 };
 
-export default FirmModal;
+export default BrandModal;
