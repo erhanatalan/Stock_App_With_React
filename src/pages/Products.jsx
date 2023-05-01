@@ -2,7 +2,7 @@ import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useStockCall from "../hooks/useStockCall";
-import { DataGrid, GridActionsCellItem, GridDeleteForeverIcon } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridToolbar} from "@mui/x-data-grid";
 import ProductModal from "../components/modals/ProductModal";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { btnStyle } from "../styles/globalStyle";
@@ -80,6 +80,8 @@ const Products = () => {
   ];
   useEffect(() => {
     getStockData("products");
+    getStockData("categories");
+    getStockData("brands");
   }, []); // eslint-disable-line
   return (
     <div>
@@ -116,6 +118,7 @@ const Products = () => {
           pageSizeOptions={[5]}
           // checkboxSelection
           disableRowSelectionOnClick
+          slots={{ toolbar: GridToolbar }}
         />
       </Box>
     </div>
